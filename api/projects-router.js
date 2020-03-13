@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const Projects = require('../data/helpers/projectModel')
+const Actions = require('../data/helpers/actionModel')
 
 router.post('/', (req, res) => {
   const project = req.body
@@ -12,6 +13,17 @@ router.post('/', (req, res) => {
     })
     .catch(() => {
       res.send(500).json({ message: 'Unable to add new post' })
+    })
+})
+
+router.post('/:id/actions', (req, res) => {
+  const action = req.body
+  Actions.insert(action)
+    .then(id => {
+      res.status(201).json({ message: `Successfully added action, new action id ${id}` })
+    })
+    .catch(() => {
+      res.status(500).json({ message: `Unable to add new action` })
     })
 })
 

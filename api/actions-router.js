@@ -4,16 +4,16 @@ const router = express.Router()
 
 const Actions = require('../data/helpers/actionModel')
 
-router.post('/', (req, res) => {
-  const action = req.body
-  Actions.insert(action)
-    .then(id => {
-      res.status(201).json({ message: `Successfully added action, new action id ${id}` })
-    })
-    .catch(() => {
-      res.status(500).json({ message: `Unable to add new action` })
-    })
-})
+// router.post('/', (req, res) => {
+//   const action = req.body
+//   Actions.insert(action)
+//     .then(id => {
+//       res.status(201).json({ message: `Successfully added action, new action id ${id}` })
+//     })
+//     .catch(() => {
+//       res.status(500).json({ message: `Unable to add new action` })
+//     })
+// })
 
 router.get('/', (req, res) => {
   Actions.get()
@@ -41,7 +41,7 @@ router.put('/:id', (req, res) => {
   const id = req.params.id
   Actions.update(id, action)
     .then(x => {
-      res.status(203).json({ message: `Successfully updated action of id ${id}` })
+      res.status(203).json({ message: `Successfully updated action of id ${id}`, status: x })
     })
     .catch(() => {
       res.status(500).json({ message: `Unable to update action of id ${id}` })
@@ -52,7 +52,7 @@ router.delete('/:id', (req, res) => {
   const id = req.params.id
   Actions.remove(id)
     .then(x => {
-      res.status(203).json({ message: `Successfully deleted action of id ${id}` })
+      res.status(203).json({ message: `Successfully deleted action of id ${id}`, status: x })
     })
     .catch(() => {
       res.status(500).json({ message: `Unable to delete action of id ${id} ` })
