@@ -40,13 +40,28 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+  Express router - allows for advanced server side routing. Allows endpoints to exist within different files in an organized manner.
+	Express json - Allows express server to read a req.body written in json.
+
 - [ ] Describe Middleware?
+
+  Everything that interacts with endpoints on the server side is essentially middleware. Middle ware are functions that are used to
+	validate, reformat, or add to a request before it ever touches the endpoint.
 
 - [ ] Describe a Resource?
 
+  ???????????
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+  Depending on the end point it may be appropriate to return the requested object(s),
+	if the request doesn't need to return object(s) however is may be instead better to return a
+	success message. Or a failure message upon error.
+
 - [ ] How can we partition our application into sub-applications?
+
+  By using express.Router(). The router allows us to split our end points into many files
+	and have a better organization of our code.
 
 ## Minimum Viable Product
 
