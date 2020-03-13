@@ -38,17 +38,36 @@ router.get('/:id', (req, res) => {
 
 router.get('/:id/actions', (req, res) => {
   const id = req.params.id
+  Projects.getProjectActions(id)
+    .then(actions => {
+      res.status(200).json(actions)
+    })
+    .catch(() => {
+      res.status(500).json({ message: `Unable to fetch actions of project of id ${id}` })
+    })
 })
 
 router.put('/:id', (req, res) => {
   const project = req.body
   const id = req.params.id
+  Projects.update(id, project)
+    .then(x => {
+      res.status(203).json({ message: `Succesfully updated project of id ${id}`, status: x })
+    })
+    .catch(() => {
+      res.status(500).json({ message: `Unable to update project of id ${id}` })
+    })
 })
 
 router.delete('/:id', (req, res) => {
   const id = req.params.id
+  Projects.delete(id)
+    .then(x => {
+      res.status(203).json({ message: `Successfully deleted project of id ${id}`, status: x })
+    })
+    .catch(() => {
+      res.status(500).json({ message: `Unable to delete project of id ${id}` })
+    })
 })
-
-
 
 module.exports = router
