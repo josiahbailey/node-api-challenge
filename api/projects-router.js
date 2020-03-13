@@ -1,26 +1,29 @@
 const express = require('express')
+const validateAction = require('../middleware/validateAction')
+const validateProject = require('../middleware/validateProject')
+const validateProjectId = require('../middleware/validateProjectId')
 
 const router = express.Router()
 
 const Projects = require('../data/helpers/projectModel')
 const Actions = require('../data/helpers/actionModel')
 
-router.post('/', (req, res) => {
+router.post('/', validateProject, (req, res) => {
   const project = req.body
   Projects.insert(project)
-    .then(id => {
-      res.status(201).json({ message: `Successfully added project, id is ${id}` })
+    .then(newProject => {
+      res.status(201).json({ message: `Successfully added project`, project: newProject })
     })
     .catch(() => {
       res.send(500).json({ message: 'Unable to add new post' })
     })
 })
 
-router.post('/:id/actions', (req, res) => {
+router.post('/:id/actions', validateAction, (req, res) => {
   const action = req.body
   Actions.insert(action)
-    .then(id => {
-      res.status(201).json({ message: `Successfully added action, new action id ${id}` })
+    .then(newAction => {
+      res.status(201).json({ message: `Successfully added action`, action: newAction })
     })
     .catch(() => {
       res.status(500).json({ message: `Unable to add new action` })
@@ -37,18 +40,12 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
-  const id = req.params.id
-  Projects.get(id)
-    .then(project => {
-      res.status(200).json(project)
-    })
-    .catch(() => {
-      res.status(500).json({ message: `Unable to fetch project of id ${id}` })
-    })
+router.get('/:id', validateProjectId, (req, res) => {
+  const project = req.project
+  res.status(200).json(project)
 })
 
-router.get('/:id/actions', (req, res) => {
+router.get('/:id/actions', validateProjectId, (req, res) => {
   const id = req.params.id
   Projects.getProjectActions(id)
     .then(actions => {
@@ -59,21 +56,21 @@ router.get('/:id/actions', (req, res) => {
     })
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateProject, validateProjectId, (req, res) => {
   const project = req.body
   const id = req.params.id
   Projects.update(id, project)
     .then(x => {
-      res.status(203).json({ message: `Succesfully updated project of id ${id}`, status: x })
+      res.status(203).json({ message: `Succesfully updated project of id ${id}`, project: x })
     })
     .catch(() => {
       res.status(500).json({ message: `Unable to update project of id ${id}` })
     })
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateProjectId, (req, res) => {
   const id = req.params.id
-  Projects.delete(id)
+  Projects.remove(id)
     .then(x => {
       res.status(203).json({ message: `Successfully deleted project of id ${id}`, status: x })
     })
