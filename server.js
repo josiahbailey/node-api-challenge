@@ -1,14 +1,15 @@
 const express = require('express')
 const helmet = require('helmet')
-const morgan = require('morgan')
 const cors = require('cors')
+
+const logger = require('./middleware/logger')
 
 const projectRouter = require('./api/projects-router')
 const actionRouter = require('./api/actions-router')
 
 const server = express()
 
-server.use(morgan())
+server.use(logger)
 server.use(helmet())
 server.use(cors())
 server.use(express.json())
