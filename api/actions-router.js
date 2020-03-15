@@ -6,9 +6,6 @@ const validateActionId = require('../middleware/validateActionId')
 const router = express.Router()
 
 const Actions = require('../data/helpers/actionModel')
-const Mappers = require('../data/helpers/mappers')
-
-const { intToBoolean, booleanToInt, actionToBody } = Mappers
 
 router.get('/', (req, res) => {
   Actions.get()
