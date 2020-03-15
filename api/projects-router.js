@@ -7,6 +7,9 @@ const router = express.Router()
 
 const Projects = require('../data/helpers/projectModel')
 const Actions = require('../data/helpers/actionModel')
+const Mappers = require('../data/helpers/mappers')
+
+const { projectToBody, actionToBody } = Mappers
 
 router.post('/', validateProject, (req, res) => {
   const project = req.body
