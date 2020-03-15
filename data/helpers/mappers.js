@@ -1,6 +1,6 @@
 module.exports = {
   intToBoolean,
-  booleanToint,
+  booleanToInt,
   projectToBody,
   actionToBody,
 };
@@ -9,7 +9,7 @@ function intToBoolean(int) {
   return int === 1 ? true : false;
 }
 
-function booleanToint(bool) {
+function booleanToInt(bool) {
   return bool === true ? 1 : 0;
 }
 
